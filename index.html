@@ -10,13 +10,33 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Better touch scrolling for mobile */
+        @media (max-width: 768px) {
+            body {
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Prevent zoom on input focus for iOS */
+            input[type="text"],
+            input[type="date"],
+            textarea {
+                font-size: 16px !important;
+            }
+
+            /* Smooth scrolling */
+            html {
+                scroll-behavior: smooth;
+            }
         }
 
         body {
             font-family: 'Arial', sans-serif;
             background: #000000;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             color: #ffffff;
         }
 
@@ -25,7 +45,7 @@
             margin: 0 auto;
             background: #000000;
             overflow: hidden;
-            animation: fadeInUp 0.8s ease-out;
+            padding-bottom: 80px;
         }
 
         /* Animations */
@@ -90,48 +110,67 @@
         /* Header */
         .header {
             text-align: center;
-            padding: 40px 20px 30px;
+            padding: 25px 15px 20px;
             position: relative;
-            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .header h1 {
             font-family: 'Brush Script MT', 'cursive', serif;
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             color: #ffffff;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             letter-spacing: 2px;
             animation: pulse 3s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
-        /* Decorative circles */
+        /* Decorative circles - hide on mobile */
         .header::before,
         .header::after {
-            content: '';
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            top: 20px;
+            display: none;
         }
 
-        .header::before {
-            left: 20px;
-            clip-path: circle(50% at 0 50%);
+        /* Day Selector */
+        .day-selector {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
         }
 
-        .header::after {
-            right: 20px;
-            clip-path: circle(50% at 100% 50%);
-        }
-
-        .header h1 {
-            font-family: 'Brush Script MT', 'cursive', serif;
-            font-size: 3.5rem;
+        .day-btn {
+            background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            position: relative;
+            animation: slideIn 0.5s ease-out backwards;
+            min-width: 40px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .day-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
         }
 
         /* Day Selector */
@@ -157,13 +196,13 @@
             animation: slideIn 0.5s ease-out backwards;
         }
 
-        .day-btn:nth-child(1) { animation-delay: 0.1s; }
-        .day-btn:nth-child(2) { animation-delay: 0.2s; }
-        .day-btn:nth-child(3) { animation-delay: 0.3s; }
-        .day-btn:nth-child(4) { animation-delay: 0.4s; }
-        .day-btn:nth-child(5) { animation-delay: 0.5s; }
-        .day-btn:nth-child(6) { animation-delay: 0.6s; }
-        .day-btn:nth-child(7) { animation-delay: 0.7s; }
+        .day-btn:nth-child(1) { animation-delay: 0.05s; }
+        .day-btn:nth-child(2) { animation-delay: 0.1s; }
+        .day-btn:nth-child(3) { animation-delay: 0.15s; }
+        .day-btn:nth-child(4) { animation-delay: 0.2s; }
+        .day-btn:nth-child(5) { animation-delay: 0.25s; }
+        .day-btn:nth-child(6) { animation-delay: 0.3s; }
+        .day-btn:nth-child(7) { animation-delay: 0.35s; }
 
         .day-btn:hover {
             color: rgba(255, 255, 255, 0.7);
@@ -197,32 +236,55 @@
         }
 
         .day-dot {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             background: #4a4a4a;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s;
-            animation: fadeIn 0.5s ease-out backwards;
+            animation: scaleIn 0.5s ease-out backwards;
+            position: relative;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .day-dot:nth-child(1) { animation-delay: 0.1s; }
-        .day-dot:nth-child(2) { animation-delay: 0.2s; }
-        .day-dot:nth-child(3) { animation-delay: 0.3s; }
-        .day-dot:nth-child(4) { animation-delay: 0.4s; }
-        .day-dot:nth-child(5) { animation-delay: 0.5s; }
-        .day-dot:nth-child(6) { animation-delay: 0.6s; }
-        .day-dot:nth-child(7) { animation-delay: 0.7s; }
+        .day-dot:nth-child(2) { animation-delay: 0.15s; }
+        .day-dot:nth-child(3) { animation-delay: 0.2s; }
+        .day-dot:nth-child(4) { animation-delay: 0.25s; }
+        .day-dot:nth-child(5) { animation-delay: 0.3s; }
+        .day-dot:nth-child(6) { animation-delay: 0.35s; }
+        .day-dot:nth-child(7) { animation-delay: 0.4s; }
 
         .day-dot.active {
             background: #ffffff;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
-            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(102, 126, 234, 0.5);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(102, 126, 234, 0.5);
+            }
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(102, 126, 234, 0.7);
+            }
         }
 
         .day-dot:hover {
             background: #666666;
-            transform: scale(1.3);
+            transform: scale(1.4);
         }
 
         .day-dot.active:hover {
@@ -235,30 +297,51 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .date-field label {
             color: #ffffff;
             font-size: 1rem;
             font-weight: 500;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         .date-field input {
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid #666666;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
             color: #ffffff;
             font-size: 1rem;
-            padding: 5px 10px;
+            padding: 8px 12px;
             width: 180px;
             outline: none;
             transition: all 0.3s;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
         }
 
         .date-field input:focus {
-            border-bottom-color: #ffffff;
-            box-shadow: 0 5px 10px -5px rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .date-field {
+                margin-bottom: 20px;
+                gap: 8px;
+            }
+
+            .date-field label {
+                font-size: 0.9rem;
+            }
+
+            .date-field input {
+                font-size: 0.95rem;
+                padding: 10px 8px;
+                width: 160px;
+            }
         }
 
         /* Main Content */
@@ -266,35 +349,31 @@
             display: grid;
             grid-template-columns: 1.8fr 1fr;
             gap: 30px;
-            padding: 0 20px;
+            padding: 0 15px;
             transition: all 0.3s ease-out;
+        }
+
+        .left-column, .right-column {
+            opacity: 1 !important;
         }
 
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding-bottom: 70px;
             }
         }
 
         .section {
             margin-bottom: 25px;
-            animation: fadeIn 0.8s ease-out backwards;
-        }
-
-        .left-column .section {
-            animation-delay: 0.3s;
-        }
-
-        .right-column .section:nth-child(1) {
-            animation-delay: 0.4s;
-        }
-
-        .right-column .section:nth-child(2) {
-            animation-delay: 0.5s;
-        }
-
-        .right-column .section:nth-child(3) {
-            animation-delay: 0.6s;
         }
 
         .section-title {
@@ -304,47 +383,82 @@
             text-align: center;
             font-weight: 600;
             letter-spacing: 1px;
+            opacity: 1 !important;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
         }
 
         /* Schedules */
         .schedules-wrapper {
             padding-right: 10px;
             margin-bottom: 20px;
+            opacity: 1 !important;
+        }
+
+        @media (max-width: 768px) {
+            .schedules-wrapper {
+                padding-right: 5px;
+                margin-bottom: 15px;
+                max-height: 50vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
         }
 
         .schedule-row {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 12px;
+            gap: 12px;
+            margin-bottom: 10px;
             animation: slideIn 0.5s ease-out backwards;
+            opacity: 1 !important;
         }
 
-        .schedule-row:nth-child(1) { animation-delay: 0.1s; }
-        .schedule-row:nth-child(2) { animation-delay: 0.15s; }
-        .schedule-row:nth-child(3) { animation-delay: 0.2s; }
-        .schedule-row:nth-child(4) { animation-delay: 0.25s; }
-        .schedule-row:nth-child(5) { animation-delay: 0.3s; }
-        .schedule-row:nth-child(6) { animation-delay: 0.35s; }
-        .schedule-row:nth-child(7) { animation-delay: 0.4s; }
-        .schedule-row:nth-child(8) { animation-delay: 0.45s; }
-        .schedule-row:nth-child(9) { animation-delay: 0.5s; }
-        .schedule-row:nth-child(10) { animation-delay: 0.55s; }
-        .schedule-row:nth-child(11) { animation-delay: 0.6s; }
-        .schedule-row:nth-child(12) { animation-delay: 0.65s; }
-        .schedule-row:nth-child(13) { animation-delay: 0.7s; }
-        .schedule-row:nth-child(14) { animation-delay: 0.75s; }
-        .schedule-row:nth-child(15) { animation-delay: 0.8s; }
-        .schedule-row:nth-child(16) { animation-delay: 0.85s; }
-        .schedule-row:nth-child(17) { animation-delay: 0.9s; }
-        .schedule-row:nth-child(18) { animation-delay: 0.95s; }
+        @media (max-width: 768px) {
+            .schedule-row {
+                gap: 10px;
+                margin-bottom: 8px;
+            }
+        }
+
+        .schedule-row:nth-child(1) { animation-delay: 0.05s; }
+        .schedule-row:nth-child(2) { animation-delay: 0.06s; }
+        .schedule-row:nth-child(3) { animation-delay: 0.07s; }
+        .schedule-row:nth-child(4) { animation-delay: 0.08s; }
+        .schedule-row:nth-child(5) { animation-delay: 0.09s; }
+        .schedule-row:nth-child(6) { animation-delay: 0.1s; }
+        .schedule-row:nth-child(7) { animation-delay: 0.11s; }
+        .schedule-row:nth-child(8) { animation-delay: 0.12s; }
+        .schedule-row:nth-child(9) { animation-delay: 0.13s; }
+        .schedule-row:nth-child(10) { animation-delay: 0.14s; }
+        .schedule-row:nth-child(11) { animation-delay: 0.15s; }
+        .schedule-row:nth-child(12) { animation-delay: 0.16s; }
+        .schedule-row:nth-child(13) { animation-delay: 0.17s; }
+        .schedule-row:nth-child(14) { animation-delay: 0.18s; }
+        .schedule-row:nth-child(15) { animation-delay: 0.19s; }
+        .schedule-row:nth-child(16) { animation-delay: 0.2s; }
+        .schedule-row:nth-child(17) { animation-delay: 0.21s; }
+        .schedule-row:nth-child(18) { animation-delay: 0.22s; }
 
         .schedule-time {
             color: #ffffff;
             font-size: 0.9rem;
-            min-width: 55px;
+            min-width: 50px;
             font-weight: 500;
             transition: all 0.3s;
+            opacity: 1 !important;
+        }
+
+        @media (max-width: 768px) {
+            .schedule-time {
+                font-size: 0.85rem;
+                min-width: 45px;
+            }
         }
 
         .schedule-row:hover .schedule-time {
@@ -358,6 +472,7 @@
             background: #4a4a4a;
             position: relative;
             transition: all 0.3s;
+            opacity: 1 !important;
         }
 
         .schedule-row:hover .schedule-line {
@@ -375,16 +490,27 @@
             color: #ffffff;
             font-size: 0.95rem;
             outline: none;
-            padding: 5px 0;
+            padding: 8px 5px;
             transition: all 0.3s;
+            min-height: 40px;
+            opacity: 1 !important;
         }
 
         .schedule-input:focus {
             transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
         }
 
         .schedule-input::placeholder {
             color: #666666;
+        }
+
+        @media (max-width: 768px) {
+            .schedule-input {
+                font-size: 0.9rem;
+                padding: 10px 5px;
+            }
         }
 
         /* Priorities */
@@ -392,12 +518,14 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            opacity: 1 !important;
         }
 
         .priority-row {
             display: flex;
             align-items: center;
             gap: 12px;
+            opacity: 1 !important;
         }
 
         .priority-dots {
@@ -413,6 +541,7 @@
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s;
+            opacity: 1 !important;
         }
 
         .priority-dot:hover {
@@ -439,6 +568,7 @@
             height: 2px;
             background: #4a4a4a;
             position: relative;
+            opacity: 1 !important;
         }
 
         .priority-input {
@@ -451,11 +581,30 @@
             color: #ffffff;
             font-size: 0.95rem;
             outline: none;
-            padding: 5px 0;
+            padding: 8px 5px;
+            min-height: 40px;
+            opacity: 1 !important;
+        }
+
+        .priority-input:focus {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
         }
 
         .priority-input::placeholder {
             color: #666666;
+        }
+
+        @media (max-width: 768px) {
+            .priority-input {
+                font-size: 0.9rem;
+                padding: 10px 5px;
+            }
+
+            .priority-dot {
+                width: 12px;
+                height: 12px;
+            }
         }
 
         /* To-Do List */
@@ -463,6 +612,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            opacity: 1 !important;
         }
 
         .todo-item {
@@ -472,19 +622,27 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            min-height: 45px;
+            min-height: 48px;
             transition: all 0.3s;
             animation: slideIn 0.5s ease-out backwards;
+            opacity: 1 !important;
         }
 
-        .todo-item:nth-child(1) { animation-delay: 0.1s; }
-        .todo-item:nth-child(2) { animation-delay: 0.15s; }
-        .todo-item:nth-child(3) { animation-delay: 0.2s; }
-        .todo-item:nth-child(4) { animation-delay: 0.25s; }
-        .todo-item:nth-child(5) { animation-delay: 0.3s; }
-        .todo-item:nth-child(6) { animation-delay: 0.35s; }
-        .todo-item:nth-child(7) { animation-delay: 0.4s; }
-        .todo-item:nth-child(8) { animation-delay: 0.45s; }
+        @media (max-width: 768px) {
+            .todo-item {
+                padding: 14px 15px;
+                min-height: 52px;
+            }
+        }
+
+        .todo-item:nth-child(1) { animation-delay: 0.05s; }
+        .todo-item:nth-child(2) { animation-delay: 0.06s; }
+        .todo-item:nth-child(3) { animation-delay: 0.07s; }
+        .todo-item:nth-child(4) { animation-delay: 0.08s; }
+        .todo-item:nth-child(5) { animation-delay: 0.09s; }
+        .todo-item:nth-child(6) { animation-delay: 0.1s; }
+        .todo-item:nth-child(7) { animation-delay: 0.11s; }
+        .todo-item:nth-child(8) { animation-delay: 0.12s; }
 
         .todo-item:hover {
             transform: translateX(5px);
@@ -492,15 +650,27 @@
         }
 
         .todo-checkbox {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
             flex-shrink: 0;
             transition: all 0.3s;
+            min-width: 20px;
+            min-height: 20px;
+            opacity: 1 !important;
         }
 
         .todo-checkbox:hover {
             transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .todo-checkbox {
+                width: 22px;
+                height: 22px;
+                min-width: 22px;
+                min-height: 22px;
+            }
         }
 
         .todo-input {
@@ -511,10 +681,18 @@
             font-size: 0.95rem;
             outline: none;
             transition: all 0.3s;
+            min-height: 24px;
+            opacity: 1 !important;
         }
 
         .todo-input::placeholder {
             color: #666666;
+        }
+
+        @media (max-width: 768px) {
+            .todo-input {
+                font-size: 1rem;
+            }
         }
 
         .todo-input.completed {
@@ -537,6 +715,7 @@
             font-family: inherit;
             line-height: 1.5;
             transition: all 0.3s;
+            opacity: 1 !important;
         }
 
         .notes-area:focus {
@@ -548,27 +727,117 @@
             color: #666666;
         }
 
+        @media (max-width: 768px) {
+            .notes-area {
+                height: 150px;
+                padding: 12px;
+                font-size: 1rem;
+            }
+        }
+
         /* Action Buttons */
         .action-buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            padding: 25px 20px;
+            gap: 12px;
+            padding: 35px 20px 30px;
             flex-wrap: wrap;
         }
 
+        @keyframes float-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .action-buttons {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(15, 15, 35, 0.98);
+                padding: 14px 12px;
+                gap: 8px;
+                z-index: 100;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+                backdrop-filter: blur(20px);
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+            }
+        }
+
         .btn {
-            padding: 10px 22px;
-            border: 2px solid #ffffff;
-            background: transparent;
+            padding: 14px 28px;
+            border: none;
             color: #ffffff;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 1px;
             position: relative;
             overflow: hidden;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            text-transform: uppercase;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn:active {
+            transform: translateY(1px) scale(0.98) !important;
+        }
+
+        /* Ripple effect on click */
+        .btn .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .btn {
+                padding: 14px 20px;
+                font-size: 0.75rem;
+                min-height: 52px;
+                flex: 1;
+                min-width: 0;
+                border-radius: 8px;
+                letter-spacing: 0.8px;
+            }
         }
 
         .btn::before {
@@ -600,28 +869,379 @@
             transform: translateY(-1px);
         }
 
+        /* Professional Button Colors */
+        .btn-save {
+            background: #10b981;
+            color: #ffffff;
+        }
+
         .btn-save:hover {
-            background: #6bcb77;
-            border-color: #6bcb77;
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+        }
+
+        .btn-load {
+            background: #6366f1;
+            color: #ffffff;
+        }
+
+        .btn-load:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-clear {
+            background: #ef4444;
             color: #ffffff;
         }
 
         .btn-clear:hover {
-            background: #ff6b6b;
-            border-color: #ff6b6b;
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+        }
+
+        .btn-export {
+            background: #8b5cf6;
             color: #ffffff;
+        }
+
+        .btn-export:hover {
+            background: #7c3aed;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35);
+        }
+
+        @media (max-width: 768px) {
+            .btn-save:hover,
+            .btn-load:hover,
+            .btn-clear:hover,
+            .btn-export:hover {
+                transform: translateY(-1px);
+            }
         }
 
         /* Footer */
         .footer {
             text-align: center;
-            padding: 20px;
+            padding: 25px 20px;
             color: #666666;
             font-size: 0.9rem;
+            position: relative;
+            margin-top: 20px;
         }
 
         .footer span {
             color: #ffffff;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease infinite;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, #764ba2, #f093fb, transparent);
+            animation: shimmer-line 2s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% {
+                filter: hue-rotate(0deg);
+            }
+            50% {
+                filter: hue-rotate(30deg);
+            }
+        }
+
+        @keyframes shimmer-line {
+            0% {
+                background-position: -100px 0;
+            }
+            100% {
+                background-position: 100px 0;
+            }
+        }
+
+        /* Professional Splash Screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            overflow: hidden;
+        }
+
+        .splash-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(90deg, rgba(102, 126, 234, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(102, 126, 234, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(50px);
+            }
+        }
+
+        .splash-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Gradient orbs */
+        .splash-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: orb-float 8s ease-in-out infinite;
+        }
+
+        .splash-orb-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.4) 0%, transparent 70%);
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .splash-orb-2 {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(240, 147, 251, 0.3) 0%, transparent 70%);
+            bottom: -125px;
+            right: -125px;
+            animation-delay: 2s;
+        }
+
+        .splash-orb-3 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(107, 203, 119, 0.2) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 4s;
+        }
+
+        @keyframes orb-float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
+        /* Main container */
+        .splash-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        /* Logo mark */
+        .splash-mark {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .splash-mark-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .splash-mark-circle {
+            fill: none;
+            stroke: url(#splash-gradient);
+            stroke-width: 3;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            animation: circle-draw 2s ease-out 0.5s forwards;
+        }
+
+        @keyframes circle-draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .splash-mark-check {
+            fill: none;
+            stroke: url(#splash-gradient);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: check-draw 0.8s ease-out 2s forwards;
+        }
+
+        @keyframes check-draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* Logo text */
+        .splash-brand {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            animation: brand-reveal 1s ease-out 1.5s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes brand-reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .splash-product {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            animation: product-reveal 1s ease-out 1.8s forwards;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        @keyframes product-reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading indicator */
+        .splash-loader {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .splash-bar {
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+            animation: bar-pulse 1.2s ease-in-out infinite;
+        }
+
+        .splash-bar:nth-child(1) { animation-delay: 0s; }
+        .splash-bar:nth-child(2) { animation-delay: 0.1s; }
+        .splash-bar:nth-child(3) { animation-delay: 0.2s; }
+        .splash-bar:nth-child(4) { animation-delay: 0.3s; }
+        .splash-bar:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes bar-pulse {
+            0%, 100% {
+                transform: scaleY(0.4);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        /* Version tag */
+        .splash-version {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+            animation: version-fade 1s ease-out 2.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes version-fade {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .splash-brand {
+                font-size: 2rem;
+                letter-spacing: 3px;
+            }
+
+            .splash-product {
+                font-size: 1rem;
+                letter-spacing: 6px;
+            }
+
+            .splash-mark {
+                width: 80px;
+                height: 80px;
+            }
+
+            .splash-bar {
+                width: 3px;
+                height: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                padding: 20px 15px;
+                font-size: 0.8rem;
+                padding-bottom: 100px;
+            }
+
+            .footer span {
+                font-size: 0.95rem;
+            }
         }
 
         /* Notification */
@@ -645,17 +1265,34 @@
             transform: translateX(0);
         }
 
+        @media (max-width: 768px) {
+            .notification {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                transform: translateY(-150%);
+                text-align: center;
+            }
+
+            .notification.show {
+                transform: translateY(0);
+            }
+        }
+
         .add-more-btn {
             background: transparent;
             color: #666666;
             border: 1px solid #4a4a4a;
-            padding: 8px 15px;
+            padding: 10px 18px;
             font-size: 0.85rem;
             cursor: pointer;
             margin-top: 10px;
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
         }
 
         .add-more-btn:hover {
@@ -667,6 +1304,14 @@
 
         .add-more-btn:active {
             transform: translateX(3px);
+        }
+
+        @media (max-width: 768px) {
+            .add-more-btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                min-height: 44px;
+            }
         }
 
         /* Export mode - hide buttons when exporting */
@@ -681,6 +1326,47 @@
     </style>
 </head>
 <body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splash-screen">
+        <!-- Gradient orbs -->
+        <div class="splash-orb splash-orb-1"></div>
+        <div class="splash-orb splash-orb-2"></div>
+        <div class="splash-orb splash-orb-3"></div>
+
+        <!-- Main content -->
+        <div class="splash-content">
+            <!-- Logo mark -->
+            <div class="splash-mark">
+                <svg class="splash-mark-svg" viewBox="0 0 100 100">
+                    <defs>
+                        <linearGradient id="splash-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <circle class="splash-mark-circle" cx="50" cy="50" r="45"/>
+                    <path class="splash-mark-check" d="M30 50 L45 65 L70 35"/>
+                </svg>
+            </div>
+
+            <!-- Brand text -->
+            <div class="splash-brand">Daily</div>
+            <div class="splash-product">PLANNER</div>
+
+            <!-- Loading bars -->
+            <div class="splash-loader">
+                <div class="splash-bar"></div>
+                <div class="splash-bar"></div>
+                <div class="splash-bar"></div>
+                <div class="splash-bar"></div>
+                <div class="splash-bar"></div>
+            </div>
+        </div>
+
+        <!-- Version -->
+        <div class="splash-version">VERSION 2.0</div>
+    </div>
+
     <div class="container">
         <!-- Header -->
         <div class="header">
@@ -810,14 +1496,14 @@
         <!-- Action Buttons -->
         <div class="action-buttons">
             <button class="btn btn-save" onclick="saveDay()">Save</button>
-            <button class="btn" onclick="loadDay()">Load</button>
+            <button class="btn btn-load" onclick="loadDay()">Load</button>
             <button class="btn btn-clear" onclick="clearDay()">Clear</button>
-            <button class="btn" onclick="exportAsImage()" style="border-color: #667eea;">📷 Export Image</button>
+            <button class="btn btn-export" onclick="exportAsImage()">Export</button>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <span>@dailyplanner</span>
+            <span>✨ Daily Planner ✨</span>
         </div>
     </div>
 
@@ -830,6 +1516,25 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            // Show splash screen
+            const splashScreen = document.getElementById('splash-screen');
+            const loadingText = document.querySelector('.splash-loading');
+
+            // Show loading text after delay
+            setTimeout(() => {
+                loadingText.classList.add('show');
+            }, 1500);
+
+            // Hide splash screen after 3.5 seconds
+            setTimeout(() => {
+                splashScreen.classList.add('hide');
+
+                // Remove splash screen from DOM after animation completes
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                }, 1000);
+            }, 3500);
+
             // Set today's date
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('date').value = today;
@@ -1153,6 +1858,27 @@
                 notification.classList.remove('show');
             }, 2000);
         }
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+
+                button.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
 
         // Export as Image
         function exportAsImage() {
